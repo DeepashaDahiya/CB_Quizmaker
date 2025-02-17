@@ -1,0 +1,164 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMaker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src = '/static/images/logo.png' alt="Logo"> 
+            <h1>QuizMaker</h1>
+        </div>
+        <nav>
+   
+                <a href="#features" class="nav-btn">Features</a>
+            
+                <a href="#about" class="nav-btn">About Us</a>
+            
+        </nav>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    </header>
+    
+    <!-- Hero Section -->
+    
+        <div class="content-container">
+            <div class="text-section">
+                <!-- <h2>What is QuizMaker?</h2> -->
+                <h3>Tired of endless notes and scattered study materials? QuizMaker is here to revolutionize the way you learn! 
+                    ✨</h3>
+                    <p>
+                    🔹 <b>Summarize Smarter – </b>Instantly condense lengthy notes into concise, easy-to-grasp summaries. <br>
+                    🔹 <b>Generate Quizzes Effortlessly – </b>Convert your study material into interactive quizzes to test your knowledge. <br>
+                    🔹 <b>Bridge the Gaps – </b>Identify missing topics by comparing your notes with the syllabus. <br> 
+                    <br>
+                    
+                    Whether you're a student, teacher, or self-learner, QuizMaker makes studying efficient, engaging, and fun! 🎯📚💡 <br>
+                    <br>
+                    
+                    <b>🚀 Turn your notes into knowledge – effortlessly!.</b></p>
+            </div>
+            <div class="image-section">
+                <img src="/static/images/logo.png" alt="QuizMaker Logo">
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="upload-section">
+                <img src="/static/images/upload.png" alt="upload here" height="200px">
+                <h2>Upload Your Notes<br> (in PDF format only)</h2>
+        
+                <!-- ✅ Added a proper form to send data to Flask -->
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="fileUpload" id="fileUpload" multiple required>
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+        
+    <!-- Features Section -->
+    <section id="features">
+        <h2>What do you want to do with your uploaded notes?
+            <br>(Our Features)</h2>
+        <div class="feature-container">
+            <div class="feature" onclick="navigateTo('summarization')">
+                
+                <h3><b>1️⃣ Text Summarization  </b></h3>
+                
+                <p>Get the Essence in Seconds!<br>
+                    📖 Long notes? No problem! QuizMaker’s AI-powered summarization extracts key points from your study material, turning pages of text into concise, clear, and easy-to-review summaries.
+                    🎯<br> Whether you're revising before an exam or preparing study notes, our tool ensures you grasp the core concepts quickly – saving time and boosting retention!</p>
+                    <img src="static/images/text_sum.webp" alt="QuizMaker Logo" height="150px">
+            </div>
+            <div class="feature" onclick="navigateTo('quiz')">
+                <h3> 2️⃣ Quiz Generation </h3>
+                <p> Transform Notes into Interactive Tests!<br>
+                    📝 Learning is more effective when tested! With QuizMaker, you can instantly convert any text or PDF notes into customized quizzes.
+                    <br>✅ Multiple-choice and short-answer questions – all auto-generated to match your study content!
+                    <br>🎮 Make learning fun, track progress, and strengthen concepts with engaging self-tests.</p>
+                    <img src="static/images/quiz_gen.webp" alt="QuizMaker Logo" height="150px">
+            </div>
+            <div class="feature" onclick="navigateTo('syllabus')">
+                <h3>3️⃣ Syllabus Gap Analysis</h3>
+                <p>Never Miss a Topic Again!<br>
+                    
+                    🔍 Are your notes covering the full syllabus?<br> QuizMaker intelligently compares your study material against the syllabus and identifies missing or undercovered topics.
+                    <br>📌 No more last-minute surprises! Ensure you’re<br> fully prepared by filling the gaps in your learning and staying on top of every subject requirement.</p>
+                    <img src="static/images/gap.webp" alt="QuizMaker Logo" height="150px">
+            </div>
+        </div>
+<br>
+        <h3>✨ QuizMaker makes studying effortless, efficient, and engaging! Whether you're a student, teacher, or lifelong learner,<br> our AI-powered tools help you study smarter, not harder! 🚀📚</h3>
+    </section>
+    
+    <!-- About Us Section -->
+    <section id="about">
+        <div class="team-box">
+            <h2>Meet the Team</h2>
+            <div class="team-container">
+                <!-- First Row: 4 Members -->
+                <div class="team-member">
+                    <img src="/static/images1/deepasha.jpeg" alt="Deepasha">
+                    <h3>Deepasha</h3>
+                    <a href="http://www.linkedin.com/in/deepasha-dahiya-7b59b1239">🔗 LinkedIn</a>
+                    
+                </div>
+                <div class="team-member">
+                    <img src="/static/images1/harshita.jpeg" alt="Person 2">
+                    <h3>Harshita</h3>
+                    <a href="https://www.linkedin.com/in/harshita-agarwal-a33929289/">🔗 LinkedIn</a>
+                    
+                </div>
+                <div class="team-member">
+                    <img src="/static/images1/snigdha.jpg" alt="Person 3">
+                    <h3>Snigdha</h3>
+                    <a href="https://www.linkedin.com/in/snigdha-choudhury-142412290/">🔗 LinkedIn</a>
+                   
+                </div>
+                <div class="team-member">
+                    <img src="/static/images1/rupali.jpg" alt="Person 4">
+                    <h3>Rupali</h3>
+                    <a href="https://www.linkedin.com/in/rupali-kardam-520803288/">🔗 LinkedIn</a>
+                   
+                </div>
+            </div>
+    
+            <div class="team-container">
+                <!-- Second Row: 3 Members -->
+                <div class="team-member">
+                    <img src="" alt="Person 5">
+                    <h3>Anushka</h3>     
+                    <a href="https://www.linkedin.com/in/anushka-baa96a256/">🔗 LinkedIn</a>               
+                    
+                </div>
+                <div class="team-member">
+                    <img src="/static/images1/nandini.jpeg" alt="Person 6">
+                    <h3>Nandini</h3>
+                    <a href="https://www.linkedin.com/in/nandini-jain-00967028b/">🔗 LinkedIn</a>
+                  
+                </div>
+                <div class="team-member">
+                    <img src="/static/images1/Taneesha.jpeg" alt="Person 7">
+                    <h3>Taneesha</h3>
+                    <a href="https://www.linkedin.com/in/taneesha-nayal-996446287/">🔗 LinkedIn</a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 QuizMaker, 
+            Developed with ❤️!
+        </p>
+    </footer>
+</body>
+</html>

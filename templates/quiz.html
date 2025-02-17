@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 50px auto;
+            width: 80%;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .option-section {
+            text-align: center;
+            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .option-section input {
+            margin: 10px;
+        }
+
+        .topic-input {
+            display: none;
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #007bff;
+            border-radius: 8px;
+            font-size: 16px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .upload-section {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .upload-section button {
+            padding: 12px 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .upload-section button:hover {
+            background-color: #0056b3;
+        }
+
+        .output-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            min-height: 150px;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            .topic-input {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Quiz Generator</h1>
+        <a href="{{ url_for('home') }}">Back to Home</a>
+    </header>
+
+    <div class="container">
+        <!-- Option Section -->
+        <div class="option-section">
+            <h2>Generate Quiz Out of your input notes:</h2>
+            <!-- <label>
+                <input type="radio" name="quizType" value="full" checked onclick="toggleTopicInput(false)"> Generate from Entire Text
+            </label>
+            <label>
+                <input type="radio" name="quizType" value="specific" onclick="toggleTopicInput(true)"> Generate from Specific Topic
+            </label>
+            <br>
+            <input type="text" id="topicInput" class="topic-input" placeholder="Enter topic here..."> -->
+        </div>
+
+        <!-- Generate Quiz Button -->
+        <div class="upload-section">
+            <button onclick="generateQuiz()">Generate Quiz</button>
+        </div>
+
+        <!-- Output Section -->
+        <!-- Output Section -->
+        <!-- Output Section -->
+<div class="output-section">
+    <h2>Quiz Output</h2>
+    <div id="quizOutput">Your generated quiz will appear here...</div>
+    
+    <!-- ✅ Make sure the button is in the HTML from the start -->
+    <button id="viewAllAnswersButton" style="display: none; margin-top: 10px;" onclick="toggleAllAnswers()">View All Answers</button>
+</div>
+
+
+    </div>
+
+    <script>
+        function toggleTopicInput(show) {
+            const topicInput = document.getElementById("topicInput");
+            if (show) {
+                topicInput.style.display = "block";
+            } else {
+                topicInput.style.display = "none";
+            }
+        }
+
+        function generateQuiz() {
+        let quizOutput = document.getElementById("quizOutput");
+        let viewAllAnswersButton = document.getElementById("viewAllAnswersButton"); // Get the button
+        quizOutput.innerHTML = "⏳ Generating quiz... Please wait.";
+        viewAllAnswersButton.style.display = "none"; // Hide button when generating
+
+        fetch("/generate_quiz", { method: "POST" })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                quizOutput.innerHTML = "❌ " + data.error;
+                return;
+            }
+
+            quizOutput.innerHTML = "<h2>Generated Quiz:</h2>";
+
+            data.questions.forEach((qa, index) => {
+                let questionId = `answer-${index}`;
+                quizOutput.innerHTML += `
+                    <p><b>Q${index + 1}: ${qa['question']}</b></p>
+                    <button onclick="toggleAnswer('${questionId}')">View Answer</button>
+                    <p id="${questionId}" style="display: none; margin-left: 15px;">Answer: ${qa['answer']}</p>
+                    <hr>
+                `;
+            });
+
+            // ✅ Show the "View All Answers" button after questions are generated
+            viewAllAnswersButton.style.display = "block";
+        })
+        .catch(error => {
+            console.error("Error generating quiz:", error);
+            quizOutput.innerHTML = "❌ Failed to generate quiz.";
+        });
+    }
+
+    // ✅ Function to toggle individual answers
+    function toggleAnswer(id) {
+        let answerElement = document.getElementById(id);
+        answerElement.style.display = answerElement.style.display === "none" ? "block" : "none";
+    }
+
+    // ✅ Function to show all answers when "View All Answers" is clicked
+    function toggleAllAnswers() {
+        let answers = document.querySelectorAll("[id^='answer-']");
+        answers.forEach(answer => {
+            answer.style.display = "block";
+        });
+
+        document.getElementById("viewAllAnswersButton").style.display = "none"; // Hide button after clicking
+    }
+
+        </script>
+</body>
+</html>
