@@ -13,6 +13,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from fuzzywuzzy import fuzz
 import pandas as pd
 from nltk.corpus import stopwords
+import nltk
+
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+
 from miss import *
 from questiongenerator import QuestionGenerator
 nltk.download('stopwords')
